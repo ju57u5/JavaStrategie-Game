@@ -30,8 +30,8 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		kamera.setWidth(kamera.getWidth() - e.getWheelRotation() * 10);
-		kamera.setHeight(kamera.getHeight() - e.getWheelRotation() * 10);
+		//kamera.setWidth(kamera.getWidth() - e.getWheelRotation() * 10);
+		//kamera.setHeight(kamera.getHeight() - e.getWheelRotation() * 10);
 	}
 
 	@Override
