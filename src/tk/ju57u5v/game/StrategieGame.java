@@ -9,23 +9,19 @@ import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.engine.TwoDMath;
 
-public class StrategieGame extends Game implements MouseWheelListener,MouseListener,tk.ju57u5v.engine.input.MouseListener {
+public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5v.engine.input.MouseListener {
 
 	Dorfzentrum dorfzentrum;
-	
+
 	public StrategieGame() {
 		super();
-		gameRunner = new GameRunner(this);
-		player = new Player();
-		
-		window.addMouseWheelListener(this);
-		window.addMouseListener(this);
+		config();
 		initalizeGame();
+		
 		dorfzentrum = new Dorfzentrum(this);
 		dorfzentrum.setPosition(100, 100);
 		Dorfzentrum dorfzentrum2 = new Dorfzentrum(this);
 		dorfzentrum2.setPosition(300, 300);
-		mouseHandler.addMouseListener(this);
 	}
 
 	public static void main(String[] args) {
@@ -39,49 +35,39 @@ public class StrategieGame extends Game implements MouseWheelListener,MouseListe
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getButton()==e.BUTTON1) {
+	public void mousedrag(int startx, int starty, int endx, int endy, MouseEvent event) {
+		int firstx = startx < endx ? startx : endx;
+		int firsty = starty < endy ? starty : endy;
+		int secondx = startx >= endx ? startx : endx;
+		int secondy = starty >= endy ? starty : endy;
+		
+		if ((startx != endx || starty != endy)) //Wenn kein drag erfolgt ist cleare
 			((Player) player).activeGroup.clear();
-		} else {
-			((Player) player).activeGroup.moveTo(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
-		}
-		
-	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void mousedrag(int startx, int starty, int endx, int endy) {
-		
-		for (int c=0;c<gameRunner.getRenderer().getEntities().size();c++) {
+		for (int c = 0; c < gameRunner.getRenderer().getEntities().size(); c++) {
 			Entity e = gameRunner.getRenderer().getEntities().get(c);
-			if (TwoDMath.isRectInRect(e.getX(), e.getY(), e.getWidth(), e.getHeight(), kamera.toRealX(startx), kamera.toRealY(starty), endx-startx, endy-starty) && e instanceof Unit) {
+			if (TwoDMath.isRectInRect(e.getX(), e.getY(), e.getWidth(), e.getHeight(), kamera.toRealX(firstx), kamera.toRealY(firsty), secondx - firstx, secondy - firsty) && e instanceof Unit) {
 				((Player) player).activeGroup.addUnit((Unit) e);
 			}
 		}
 	}
 
 	@Override
-	public void mouseclick(int x, int y) {
-		// TODO Auto-generated method stub
+	public void mouseclick(int x, int y, MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			((Player) player).activeGroup.clear();
+		} else {
+			((Player) player).activeGroup.moveTo(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
+		}
+	}
+	
+	public void config() {
+		gameRunner = new GameRunner(this);
+		player = new Player();
+		window.addMouseWheelListener(this);
+		mouseHandler.addMouseListener(this);
+		mouseHandler.setRightDrag(false);
+		mouseHandler.setDrawDrag(true);
 	}
 
 }
