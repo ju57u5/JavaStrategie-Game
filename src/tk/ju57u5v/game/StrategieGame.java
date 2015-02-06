@@ -8,24 +8,28 @@ import java.awt.event.MouseWheelListener;
 import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.engine.TwoDMath;
+import tk.ju57u5v.engine.netcode.Client;
+import tk.ju57u5v.engine.netcode.Server;
 
 public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5v.engine.input.MouseListener {
 
 	Dorfzentrum dorfzentrum;
 
-	public StrategieGame() {
-		super();
+	public StrategieGame(String[] args) {
+		super(args);
 		config();
+		server = new Server(this);
+		client = new Client(this, "127.0.0.1", 27015);
 		initalizeGame();
-		
+		client.sendMessage("test");
 		dorfzentrum = new Dorfzentrum(this);
 		dorfzentrum.setPosition(100, 100);
 		Dorfzentrum dorfzentrum2 = new Dorfzentrum(this);
-		dorfzentrum2.setPosition(300, 300);
+		dorfzentrum2.setPosition(100, 150);
 	}
 
 	public static void main(String[] args) {
-		new StrategieGame();
+		new StrategieGame(args);
 	}
 
 	@Override
@@ -57,7 +61,9 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			((Player) player).activeGroup.clear();
 		} else {
-			((Player) player).activeGroup.moveTo(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
+			int movex = TwoDMath.toCartX(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
+			int movey = TwoDMath.toCartY(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
+			((Player) player).activeGroup.moveTo(movex, movey);
 		}
 	}
 	

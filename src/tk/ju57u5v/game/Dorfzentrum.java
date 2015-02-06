@@ -19,7 +19,8 @@ public class Dorfzentrum extends Unit {
 	
 	@Override
 	public void render (Graphics2D g) {
-			g.drawImage( game.getResourceManager().getResource(getAnimationQuery()), getRelativX(), getRelativY(), null);
+			//g.drawImage( game.getResourceManager().getResource(getAnimationQuery()), getRelativX(), getRelativY(), null);
+			g.drawImage( game.getResourceManager().getResource("block"),getRelativIsoX(), getRelativIsoY(), null);
 	}
 	
 	@Override
