@@ -1,10 +1,8 @@
 package tk.ju57u5v.game;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-
 import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.engine.TwoDMath;
@@ -21,11 +19,13 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		server = new Server(this);
 		client = new Client(this, "127.0.0.1", 27015);
 		initalizeGame();
-		client.sendMessage("test");
-		dorfzentrum = new Dorfzentrum(this);
-		dorfzentrum.setPosition(100, 100);
-		Dorfzentrum dorfzentrum2 = new Dorfzentrum(this);
-		dorfzentrum2.setPosition(100, 150);
+		
+		for (int c=0;c<=10000;c += 50) {
+			for (int i=0;i<=10000;i += 50) {
+				new Haus(this).setPosition(c,i);
+			}
+		}
+		new Dorfzentrum(this).setPosition(100, 100);
 	}
 
 	public static void main(String[] args) {
@@ -34,8 +34,8 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		//kamera.setWidth(kamera.getWidth() - e.getWheelRotation() * 10);
-		//kamera.setHeight(kamera.getHeight() - e.getWheelRotation() * 10);
+		// kamera.setWidth(kamera.getWidth() - e.getWheelRotation() * 10);
+		// kamera.setHeight(kamera.getHeight() - e.getWheelRotation() * 10);
 	}
 
 	@Override
@@ -44,13 +44,14 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		int firsty = starty < endy ? starty : endy;
 		int secondx = startx >= endx ? startx : endx;
 		int secondy = starty >= endy ? starty : endy;
-		
-		if ((startx != endx || starty != endy)) //Wenn kein drag erfolgt ist cleare
+
+		if ((startx != endx || starty != endy)) // Wenn kein drag erfolgt ist
+												// cleare
 			((Player) player).activeGroup.clear();
 
 		for (int c = 0; c < gameRunner.getRenderer().getEntities().size(); c++) {
 			Entity e = gameRunner.getRenderer().getEntities().get(c);
-			if (TwoDMath.isRectInRect(e.getX(), e.getY(), e.getWidth(), e.getHeight(), kamera.toRealX(firstx), kamera.toRealY(firsty), secondx - firstx, secondy - firsty) && e instanceof Unit) {
+			if (TwoDMath.isRectInRect(e.getRelativIsoX(), e.getRelativIsoY(), e.getWidth(), e.getHeight(), firstx, firsty, secondx - firstx, secondy - firsty) && e instanceof Unit) {
 				((Player) player).activeGroup.addUnit((Unit) e);
 			}
 		}
@@ -66,7 +67,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 			((Player) player).activeGroup.moveTo(movex, movey);
 		}
 	}
-	
+
 	public void config() {
 		gameRunner = new GameRunner(this);
 		player = new Player();
