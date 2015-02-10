@@ -1,8 +1,11 @@
 package tk.ju57u5v.game;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+
 import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.engine.TwoDMath;
@@ -19,12 +22,8 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		server = new Server(this);
 		client = new Client(this, "127.0.0.1", 27015);
 		initalizeGame();
-		
-		for (int c=0;c<=10000;c += 50) {
-			for (int i=0;i<=10000;i += 50) {
-				new Haus(this).setPosition(c,i);
-			}
-		}
+		BufferedImage map = tileManager.generateWorld(Math.round(Math.random() * 100 * Math.random() * 10));
+		new MiniMap(this, map).saveMap();
 		new Dorfzentrum(this).setPosition(100, 100);
 	}
 
@@ -71,6 +70,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	public void config() {
 		gameRunner = new GameRunner(this);
 		player = new Player();
+		window.setBackground(Color.black);
 		window.addMouseWheelListener(this);
 		mouseHandler.addMouseListener(this);
 		mouseHandler.setRightDrag(false);

@@ -14,12 +14,12 @@ public class Dorfzentrum extends Unit {
 		getSavedAnimation("walk","dorfzentrum_walk");
 		getSavedAnimation("stand","dorfzentrum_stand");
 		animationManager.selectAnimation("walk");
-		game.getResourceManager().setDimensionsFromResource("test", this);
+		game.getResourceManager().setDimensionsFromResource("unit", this);
 	}
 	
 	@Override
 	public void render (Graphics2D g) {
-			g.drawImage( game.getResourceManager().getResource("test"),getRelativIsoX(), getRelativIsoY(), null);
+			g.drawImage( game.getResourceManager().getResource("unit"),getRelativIsoX(), getRelativIsoY(), null);
 	}
 	
 	@Override
