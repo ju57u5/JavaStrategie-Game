@@ -10,6 +10,7 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 	
 	@Override
 	public void work() {
+		//System.out.println(game.getWindow().isFullscreen());
 		doKeys();
 	}
 	

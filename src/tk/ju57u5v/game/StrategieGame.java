@@ -75,6 +75,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		mouseHandler.addMouseListener(this);
 		mouseHandler.setRightDrag(false);
 		mouseHandler.setDrawDrag(true);
+		//window.goFullScreen();
 	}
 
 }
