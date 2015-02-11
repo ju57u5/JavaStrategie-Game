@@ -23,7 +23,7 @@ public class MiniMap extends GameObject {
 	public MiniMap(Game game, BufferedImage map) {
 		super(game);
 		this.map = map;
-		//rotate();
+		// rotate();
 		setPosition(-10000, -10000);
 		setWidth(100000);
 		setHeight(100000);
@@ -31,21 +31,27 @@ public class MiniMap extends GameObject {
 	}
 
 	@Override
-	public void render (Graphics2D g) {
-		g.drawImage(map, 0, 0, null);
+	public void render(Graphics2D g) {
+		g.drawImage(map, 800, 500, null);
 		g.setColor(new Color(0f, 0.255f, 0.255f, 0.5f));
-		
+
 		int xpos = game.getKamera().getX();
 		int ypos = game.getKamera().getY();
-		int width = game.getKamera().getWidth()/Tile.TILEWIDTH;
-		int height = game.getKamera().getHeight()/Tile.TILEHEIGHT;
+		int width = game.getKamera().getWidth() / Tile.TILEWIDTH;
+		int height = game.getKamera().getHeight() / Tile.TILEHEIGHT;
 
-		int x = TwoDMath.toCartX(xpos, ypos)/Tile.TILEWIDTH;
-		int y = TwoDMath.toCartY(xpos, ypos)/Tile.TILEHEIGHT;
-		//System.out.println(game.getKamera().getX()+" "+x+" "+" ");
-		g.fillRect(x, y, width, height);
+		int x = TwoDMath.toCartX(xpos, ypos) / Tile.TILEWIDTH + 800;
+		int y = TwoDMath.toCartY(xpos, ypos) / Tile.TILEHEIGHT + 500;
+		/*
+		 * AffineTransform old = g.getTransform(); g.rotate(Math.toRadians(-45),
+		 * x, y); //g.fillRect(x, y+height/2, width, height); g.fillRect(x, y,
+		 * width, height); g.setTransform(old);
+		 */
+		// Es wird ziehmlich aufwendig berechnet wo die Position der Kamera ist.
+		// War langes getüftel. Nur verändern wenn nötig :D
+		g.fillRect(xpos / Tile.TILEWIDTH + 800 + game.getTileManager().getTileWidth(), ypos / Tile.TILEHEIGHT + 500 + ((int) (0.6 * 400 / Tile.TILEWIDTH)), width, height);
 	}
-	
+
 	public void saveMap() {
 		try {
 			ImageIO.write(map, "png", new File(game.getResourceManager().getBasePath(), "map.png"));
