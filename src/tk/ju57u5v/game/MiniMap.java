@@ -14,19 +14,19 @@ import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.engine.GameObject;
 import tk.ju57u5v.engine.Kamera;
 import tk.ju57u5v.engine.TwoDMath;
+import tk.ju57u5v.engine.gui.GuiElement;
 import tk.ju57u5v.engine.world.Tile;
 
-public class MiniMap extends GameObject {
+public class MiniMap extends GuiElement {
 
 	BufferedImage map;
 
 	public MiniMap(Game game, BufferedImage map) {
 		super(game);
 		this.map = map;
-		// rotate();
-		setPosition(-10000, -10000);
-		setWidth(100000);
-		setHeight(100000);
+		setPosition(800, 500);
+		setWidth(map.getWidth());
+		setHeight(map.getHeight());
 		initialise();
 	}
 
@@ -40,16 +40,9 @@ public class MiniMap extends GameObject {
 		int width = game.getKamera().getWidth() / Tile.TILEWIDTH;
 		int height = game.getKamera().getHeight() / Tile.TILEHEIGHT;
 
-		int x = TwoDMath.toCartX(xpos, ypos) / Tile.TILEWIDTH + 800;
-		int y = TwoDMath.toCartY(xpos, ypos) / Tile.TILEHEIGHT + 500;
-		/*
-		 * AffineTransform old = g.getTransform(); g.rotate(Math.toRadians(-45),
-		 * x, y); //g.fillRect(x, y+height/2, width, height); g.fillRect(x, y,
-		 * width, height); g.setTransform(old);
-		 */
 		// Es wird ziehmlich aufwendig berechnet wo die Position der Kamera ist.
 		// War langes getüftel. Nur verändern wenn nötig :D
-		g.fillRect(xpos / Tile.TILEWIDTH + 800 + game.getTileManager().getTileWidth(), ypos / Tile.TILEHEIGHT + 500 + ((int) (0.6 * 400 / Tile.TILEWIDTH)), width, height);
+		g.fillRect(xpos / Tile.TILEWIDTH + getX() + game.getTileManager().getTileWidth(), ypos / Tile.TILEHEIGHT + getY() + ((int) (0.6 * 400 / Tile.TILEHEIGHT)), width, height);
 	}
 
 	public void saveMap() {
@@ -58,5 +51,12 @@ public class MiniMap extends GameObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void onClick (int x, int y) {
+		int xpos = (x-game.getTileManager().getTileWidth())*Tile.TILEWIDTH;
+		int ypos = (y-game.getTileManager().getTileHeight() - ((int) (0.6 * 400 / Tile.TILEHEIGHT))+getY())*Tile.TILEHEIGHT;
+		game.getKamera().setPosition(xpos-game.getKamera().getWidth()/2, ypos-game.getKamera().getHeight()/2);
 	}
 }

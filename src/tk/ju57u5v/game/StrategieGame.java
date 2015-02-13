@@ -33,8 +33,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		// kamera.setWidth(kamera.getWidth() - e.getWheelRotation() * 10);
-		// kamera.setHeight(kamera.getHeight() - e.getWheelRotation() * 10);
+
 	}
 
 	@Override
@@ -68,6 +67,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	}
 
 	public void config() {
+		tileManager = new TileManager(this, 500, 500);
 		gameRunner = new GameRunner(this);
 		player = new Player();
 		window.setBackground(Color.black);
