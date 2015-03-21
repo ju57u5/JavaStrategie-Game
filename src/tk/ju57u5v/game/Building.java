@@ -10,8 +10,8 @@ public class Building extends GameObject{
 	private int size=1;
 	private String sprite = "";
 	
-	public Building(Game game) {
-		super(game);
+	public Building() {
+		super();
 	}
 
 	public int getHealth() {

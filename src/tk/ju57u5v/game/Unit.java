@@ -11,8 +11,8 @@ public class Unit extends Entity{
 	private int attackSpeed=1;
 	private boolean alive=false;
 	
-	public Unit(Game game) {
-		super(game);
+	public Unit() {
+		super();
 	}
 	
 	public void setHealth(int health) {

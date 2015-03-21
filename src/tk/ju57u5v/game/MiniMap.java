@@ -21,8 +21,8 @@ public class MiniMap extends GuiElement {
 
 	BufferedImage map;
 
-	public MiniMap(Game game, BufferedImage map) {
-		super(game);
+	public MiniMap(BufferedImage map) {
+		super();
 		this.map = map;
 		setPosition(800, 500);
 		setWidth(map.getWidth());
@@ -35,19 +35,19 @@ public class MiniMap extends GuiElement {
 		g.drawImage(map, 800, 500, null);
 		g.setColor(new Color(0f, 0.255f, 0.255f, 0.5f));
 
-		int xpos = game.getKamera().getX();
-		int ypos = game.getKamera().getY();
-		int width = game.getKamera().getWidth() / Tile.TILEWIDTH;
-		int height = game.getKamera().getHeight() / Tile.TILEHEIGHT;
+		int xpos = Game.getKamera().getX();
+		int ypos = Game.getKamera().getY();
+		int width = Game.getKamera().getWidth() / Tile.TILEWIDTH;
+		int height = Game.getKamera().getHeight() / Tile.TILEHEIGHT;
 
 		// Es wird ziehmlich aufwendig berechnet wo die Position der Kamera ist.
 		// War langes getüftel. Nur verändern wenn nötig :D
-		g.fillRect(xpos / Tile.TILEWIDTH + getX() + game.getTileManager().getTileWidth(), ypos / Tile.TILEHEIGHT + getY() + ((int) (0.6 * 400 / Tile.TILEHEIGHT)), width, height);
+		g.fillRect(xpos / Tile.TILEWIDTH + getX() + Game.getTileManager().getTileWidth(), ypos / Tile.TILEHEIGHT + getY() + ((int) (0.6 * 400 / Tile.TILEHEIGHT)), width, height);
 	}
 
 	public void saveMap() {
 		try {
-			ImageIO.write(map, "png", new File(game.getResourceManager().getBasePath(), "map.png"));
+			ImageIO.write(map, "png", new File(Game.getResourceManager().getBasePath(), "map.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,8 +55,8 @@ public class MiniMap extends GuiElement {
 	
 	@Override
 	public void onClick (int x, int y) {
-		int xpos = (x-game.getTileManager().getTileWidth())*Tile.TILEWIDTH;
-		int ypos = (y-game.getTileManager().getTileHeight() - ((int) (0.6 * 400 / Tile.TILEHEIGHT))+getY())*Tile.TILEHEIGHT;
-		game.getKamera().setPosition(xpos-game.getKamera().getWidth()/2, ypos-game.getKamera().getHeight()/2);
+		int xpos = (x-Game.getTileManager().getTileWidth())*Tile.TILEWIDTH;
+		int ypos = (y-Game.getTileManager().getTileHeight() - ((int) (0.6 * 400 / Tile.TILEHEIGHT))+getY())*Tile.TILEHEIGHT;
+		Game.getKamera().setPosition(xpos-Game.getKamera().getWidth()/2, ypos-Game.getKamera().getHeight()/2);
 	}
 }

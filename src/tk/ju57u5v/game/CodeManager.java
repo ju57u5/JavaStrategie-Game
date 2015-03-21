@@ -11,7 +11,7 @@ public class CodeManager extends tk.ju57u5v.engine.console.CodeManager {
 	}
 	
 	public void processUnitSettings(String pFileName, Unit unit) {
-		String content = game.getResourceManager().getFile(pFileName);
+		String content = Game.getResourceManager().getFile(pFileName);
 		
 		String[] commands = content.split(";");
 		for (String command : commands) {
@@ -31,7 +31,7 @@ public class CodeManager extends tk.ju57u5v.engine.console.CodeManager {
 	}
 	
 	public void processBuildingSettings(String pFileName, Building building) {
-		String content = game.getResourceManager().getFile(pFileName);
+		String content = Game.getResourceManager().getFile(pFileName);
 		
 		String[] commands = content.split(";");
 		for (String command : commands) {

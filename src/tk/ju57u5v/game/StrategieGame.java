@@ -8,27 +8,37 @@ import java.awt.image.BufferedImage;
 
 import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
+import tk.ju57u5v.game.Player;
 import tk.ju57u5v.engine.TwoDMath;
 import tk.ju57u5v.engine.netcode.Client;
 import tk.ju57u5v.engine.netcode.Server;
 
 public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5v.engine.input.MouseListener {
 
-	Dorfzentrum dorfzentrum;
+	private Dorfzentrum dorfzentrum;
+	
+	/**
+	 * Player Object des Spiels
+	 */
+	protected Player player = new Player();
+
 
 	public StrategieGame(String[] args) {
 		super(args);
 		config();
 		server = new Server(this);
-		client = new Client(this, "127.0.0.1", 27015);
+		client = new Client(this);
+		
 		initalizeGame();
 		BufferedImage map = tileManager.generateWorld(Math.round(Math.random() * 100 * Math.random() * 10));
-		new MiniMap(this, map).saveMap();
-		new Dorfzentrum(this).setPosition(100, 100);
+		//BufferedImage map = tileManager.generateWorld2(10);
+		new MiniMap(map).saveMap();
+		new Dorfzentrum().setPosition(100, 100);
+		client.requestEntityCreate(Dorfzentrum.class);
 	}
 
 	public static void main(String[] args) {
-		new StrategieGame(args);
+		StrategieGame.build(new StrategieGame(args));
 	}
 
 	@Override
@@ -67,7 +77,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	}
 
 	public void config() {
-		tileManager = new TileManager(this, 500, 500);
+		tileManager = new TileManager(500, 500);
 		gameRunner = new GameRunner(this);
 		player = new Player();
 		window.setBackground(Color.black);

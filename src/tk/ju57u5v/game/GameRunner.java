@@ -10,22 +10,22 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 	
 	@Override
 	public void work() {
-		//System.out.println(game.getWindow().isFullscreen());
+		//System.out.println(Game.getWindow().isFullscreen());
 		doKeys();
 	}
 	
 	private void doKeys() {
-		if (game.getBindHandler().bindActive("+left")) {
-			game.getKamera().setX(game.getKamera().getX()-5);
+		if (Game.getBindHandler().bindActive("+left")) {
+			Game.getKamera().setX(Game.getKamera().getX()-5);
 		}
-		if (game.getBindHandler().bindActive("+right")) {
-			game.getKamera().setX(game.getKamera().getX()+5);
+		if (Game.getBindHandler().bindActive("+right")) {
+			Game.getKamera().setX(Game.getKamera().getX()+5);
 		}
-		if (game.getBindHandler().bindActive("+up")) {
-			game.getKamera().setY(game.getKamera().getY()-5);
+		if (Game.getBindHandler().bindActive("+up")) {
+			Game.getKamera().setY(Game.getKamera().getY()-5);
 		}
-		if (game.getBindHandler().bindActive("+down")) {
-			game.getKamera().setY(game.getKamera().getY()+5);
+		if (Game.getBindHandler().bindActive("+down")) {
+			Game.getKamera().setY(Game.getKamera().getY()+5);
 		}
 		
 	}
