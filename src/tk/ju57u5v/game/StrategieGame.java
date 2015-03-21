@@ -26,8 +26,8 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	public StrategieGame(String[] args) {
 		super(args);
 		config();
-		server = new Server(this);
-		client = new Client(this);
+		server = new Server();
+		client = new Client();
 		
 		initalizeGame();
 		BufferedImage map = tileManager.generateWorld(Math.round(Math.random() * 100 * Math.random() * 10));
@@ -78,7 +78,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	public void config() {
 		tileManager = new TileManager(500, 500);
-		gameRunner = new GameRunner(this);
+		gameRunner = new GameRunner();
 		player = new Player();
 		window.setBackground(Color.black);
 		window.addMouseWheelListener(this);

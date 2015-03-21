@@ -4,8 +4,8 @@ import tk.ju57u5v.engine.Game;
 
 public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 
-	public GameRunner(Game game) {
-		super(game);
+	public GameRunner() {
+		super();
 	}
 	
 	@Override
