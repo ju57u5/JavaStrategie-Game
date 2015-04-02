@@ -31,22 +31,22 @@ public class Unit extends Entity{
 	}
 
 	public int getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	public int getHealth() {
-		return health;
+		return this.health;
 	}
 
 	public int getDamage() {
-		return damage;
+		return this.damage;
 	}
 
 	public int getAttackSpeed() {
-		return attackSpeed;
+		return this.attackSpeed;
 	}
 	
 	public void moveTo(int x, int y) {
-		this.moveTo(x, y, speed);
+		this.moveTo(x, y, this.speed);
 	}
 }

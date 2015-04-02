@@ -11,7 +11,7 @@ public class Dorfzentrum extends Unit {
 		initialise();
 		getSavedAnimation("walk", "dorfzentrum_walk");
 		getSavedAnimation("stand", "dorfzentrum_stand");
-		animationManager.selectAnimation("walk");
+		this.animationManager.selectAnimation("walk");
 		Game.getResourceManager().setDimensionsFromResource("unit", this);
 	}
 
@@ -23,9 +23,9 @@ public class Dorfzentrum extends Unit {
 	@Override
 	public void update() {
 		if (isMoving()) {
-			animationManager.selectAnimation("walk");
+			this.animationManager.selectAnimation("walk");
 		} else {
-			animationManager.selectAnimation("stand");
+			this.animationManager.selectAnimation("stand");
 		}
 	}
 }

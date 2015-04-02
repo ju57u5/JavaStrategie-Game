@@ -16,7 +16,6 @@ public class UnitAuswahl extends GuiElement{
 
 	@Override
 	public void render(Graphics2D g) {
-		System.out.println("test ");
 		g.setColor(Color.ORANGE);
 		g.drawRect(getX(), getY(), getWidth(), getHeight());
 	}

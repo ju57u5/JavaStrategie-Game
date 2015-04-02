@@ -26,7 +26,7 @@ public class MiniMap extends GuiElement {
 
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(map, 800, 500, null);
+		g.drawImage(this.map, 800, 500, null);
 		g.setColor(new Color(0f, 0.255f, 0.255f, 0.5f));
 
 		int xpos = Game.getKamera().getX();
@@ -41,7 +41,7 @@ public class MiniMap extends GuiElement {
 
 	public void saveMap() {
 		try {
-			ImageIO.write(map, "png", new File(Game.getResourceManager().getBasePath(), "map.png"));
+			ImageIO.write(this.map, "png", new File(Game.getResourceManager().getBasePath(), "map.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

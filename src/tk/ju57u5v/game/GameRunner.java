@@ -24,48 +24,47 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 	
 	private void doMouse() {
 		//Start von Click oder Drag leftMouse
-		if (startPos.isNullVec() && Game.getBindHandler().isMouseButtonDown(1)) {
-			startPos = Game.getBindHandler().getMousePosition();
+		if (this.startPos.isNullVec() && Game.getBindHandler().isMouseButtonDown(1)) {
+			System.out.println("test");
+			this.startPos = Game.getBindHandler().getMousePosition();
 		}
 		
 		//Während Click oder Draw
 		if (Game.getBindHandler().isMouseButtonDown(1)) {
+			this.endPos = Game.getBindHandler().getMousePosition();
 			findRect();
-			unitAuswahl.setPosition(ecke);
-			unitAuswahl.setDimension(dimensions);
+			//System.out.println(ecke+" "+dimensions);
+			this.unitAuswahl.setPosition(this.ecke);
+			this.unitAuswahl.setDimension(this.dimensions);
 		}
 		
 		//Ende von Click oder Drag leftMouse
-		if (!startPos.isNullVec() && !Game.getBindHandler().isMouseButtonDown(1)) {
+		if (!this.startPos.isNullVec() && !Game.getBindHandler().isMouseButtonDown(1)) {
 			//System.out.println(startPos);
 			//System.out.println(!startPos.isNullVec() && !Game.getBindHandler().isMouseButtonDown(1));
 			//System.out.println("ende");
-			endPos = Game.getBindHandler().getMousePosition();
+			this.endPos = Game.getBindHandler().getMousePosition();
 			//Reset
 			//TODO geht auch net -.-
 			//startPos.x=0.0;
 			//startPos.y=0.0;
-			startPos = new Vec2(0, 0);
 			
 			//Click
-			if (startPos.equals(endPos)) {
-				findUnit(startPos);
-				findHouse(startPos);
+			if (this.startPos.equals(this.endPos)) {
+				findUnit(this.startPos);
+				findHouse(this.startPos);
 			} else {
-				findUnits(startPos, endPos);
-				findHouses(startPos, endPos);
+				findUnits(this.startPos, this.endPos);
+				findHouses(this.startPos, this.endPos);
 			}
+			this.startPos = new Vec2(0, 0);
 		}
 	}
 	
 	private void findRect() {
-		Vec2 first = new Vec2(0, 0);
-		first.x = startPos.x < endPos.x ? startPos.x : endPos.x;
-		first.y = startPos.y < endPos.y ? startPos.y : endPos.y;
-		
-		Vec2 second = new Vec2(0, 0);
-		second.x = startPos.x >= endPos.x ? startPos.x : endPos.x;
-		second.y = startPos.y >= endPos.y ? endPos.x : endPos.y;
+		System.out.println(this.startPos+" "+this.endPos);
+		Vec2 first = new Vec2(Math.min(this.startPos.x, this.endPos.x), Math.min(this.startPos.y, this.endPos.y));
+		Vec2 second = new Vec2(Math.max(this.startPos.x, this.endPos.x), Math.max(this.startPos.y, this.endPos.y));
 		
 		this.ecke = first;
 		this.dimensions = second.minus(first);

@@ -14,7 +14,7 @@ public class Building extends GameObject{
 	}
 
 	public int getHealth() {
-		return health;
+		return this.health;
 	}
 
 	public void setHealth(int health) {

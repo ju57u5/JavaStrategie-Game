@@ -8,9 +8,7 @@ import java.awt.image.BufferedImage;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.game.Player;
 import tk.ju57u5v.game.gui.MiniMap;
-import tk.ju57u5v.game.gui.UnitAuswahl;
 import tk.ju57u5v.engine.TwoDMath;
-import tk.ju57u5v.engine.components.Entity;
 import tk.ju57u5v.engine.network.Client;
 import tk.ju57u5v.engine.network.Server;
 
@@ -77,18 +75,18 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	@Override
 	public void mouseclick(int x, int y, MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
-			((Player) player).activeGroup.clear();
+			this.player.activeGroup.clear();
 		} else {
 			int movex = TwoDMath.toCartX(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
 			int movey = TwoDMath.toCartY(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
-			((Player) player).activeGroup.moveTo(movex, movey);
+			this.player.activeGroup.moveTo(movex, movey);
 		}
 	}
 
 	public void config() {
 		tileManager = new TileManager(500, 500);
 		gameRunner = new GameRunner();
-		player = new Player();
+		this.player = new Player();
 		window.setBackground(Color.black);
 		window.addMouseWheelListener(this);
 		mouseHandler.addMouseListener(this);
