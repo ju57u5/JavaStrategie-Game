@@ -1,7 +1,6 @@
 package tk.ju57u5v.game;
 
-import tk.ju57u5v.engine.Entity;
-import tk.ju57u5v.engine.Game;
+import tk.ju57u5v.engine.components.Entity;
 
 public class Unit extends Entity{
 	

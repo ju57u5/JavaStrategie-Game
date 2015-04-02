@@ -1,7 +1,6 @@
 package tk.ju57u5v.game;
 
-import tk.ju57u5v.engine.Game;
-import tk.ju57u5v.engine.GameObject;
+import tk.ju57u5v.engine.components.GameObject;
 
 public class Building extends GameObject{
 
@@ -27,7 +26,7 @@ public class Building extends GameObject{
 	}
 	
 	public void setLevel(int level) {
-		level=this.level;
+		this.level=level;
 	}
 	
 }

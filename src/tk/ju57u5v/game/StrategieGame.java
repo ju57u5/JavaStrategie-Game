@@ -1,21 +1,20 @@
 package tk.ju57u5v.game;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
-import tk.ju57u5v.engine.Entity;
 import tk.ju57u5v.engine.Game;
 import tk.ju57u5v.game.Player;
+import tk.ju57u5v.game.gui.MiniMap;
+import tk.ju57u5v.game.gui.UnitAuswahl;
 import tk.ju57u5v.engine.TwoDMath;
-import tk.ju57u5v.engine.netcode.Client;
-import tk.ju57u5v.engine.netcode.Server;
+import tk.ju57u5v.engine.components.Entity;
+import tk.ju57u5v.engine.network.Client;
+import tk.ju57u5v.engine.network.Server;
 
 public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5v.engine.input.MouseListener {
-
-	private Dorfzentrum dorfzentrum;
 	
 	/**
 	 * Player Object des Spiels
@@ -30,13 +29,23 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		client = new Client();
 		
 		initalizeGame();
+	}
+
+	@Override
+	public void startGame() {
+		super.startGame();
 		BufferedImage map = tileManager.generateWorld(Math.round(Math.random() * 100 * Math.random() * 10));
 		//BufferedImage map = tileManager.generateWorld2(10);
 		new MiniMap(map).saveMap();
+		console.getConVarManager().safeVars();
 		new Dorfzentrum().setPosition(100, 100);
+		//DEBUG:
+		client.connect("127.0.0.1", 27015);
+		client.requestEntityCreate(Dorfzentrum.class);
+		client.requestEntityCreate(Dorfzentrum.class);
 		client.requestEntityCreate(Dorfzentrum.class);
 	}
-
+	
 	public static void main(String[] args) {
 		StrategieGame.build(new StrategieGame(args));
 	}
@@ -48,7 +57,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	@Override
 	public void mousedrag(int startx, int starty, int endx, int endy, MouseEvent event) {
-		int firstx = startx < endx ? startx : endx;
+		/*int firstx = startx < endx ? startx : endx;
 		int firsty = starty < endy ? starty : endy;
 		int secondx = startx >= endx ? startx : endx;
 		int secondy = starty >= endy ? starty : endy;
@@ -62,7 +71,7 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 			if (TwoDMath.isRectInRect(e.getRelativIsoX(), e.getRelativIsoY(), e.getWidth(), e.getHeight(), firstx, firsty, secondx - firstx, secondy - firsty) && e instanceof Unit) {
 				((Player) player).activeGroup.addUnit((Unit) e);
 			}
-		}
+		}*/
 	}
 
 	@Override

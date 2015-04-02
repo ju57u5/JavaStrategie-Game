@@ -1,9 +1,7 @@
-package tk.ju57u5v.game;
+package tk.ju57u5v.game.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +9,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import tk.ju57u5v.engine.Game;
-import tk.ju57u5v.engine.GameObject;
-import tk.ju57u5v.engine.Kamera;
-import tk.ju57u5v.engine.TwoDMath;
 import tk.ju57u5v.engine.gui.GuiElement;
 import tk.ju57u5v.engine.world.Tile;
 
@@ -27,7 +22,6 @@ public class MiniMap extends GuiElement {
 		setPosition(800, 500);
 		setWidth(map.getWidth());
 		setHeight(map.getHeight());
-		initialise();
 	}
 
 	@Override
