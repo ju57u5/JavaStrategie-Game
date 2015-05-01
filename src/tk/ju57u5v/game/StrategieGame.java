@@ -12,13 +12,12 @@ import tk.ju57u5v.engine.TwoDMath;
 import tk.ju57u5v.engine.network.Client;
 import tk.ju57u5v.engine.network.Server;
 
-public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5v.engine.input.MouseListener {
+public class StrategieGame extends Game implements MouseWheelListener{
 	
 	/**
 	 * Player Object des Spiels
 	 */
 	protected Player player = new Player();
-
 
 	public StrategieGame(String[] args) {
 		super(args);
@@ -31,6 +30,8 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	@Override
 	public void startGame() {
+		// Prüfe ob eine Config da ist.
+		resourceManager.checkConfig();
 		super.startGame();
 		BufferedImage map = tileManager.generateWorld(Math.round(Math.random() * 100 * Math.random() * 10));
 		//BufferedImage map = tileManager.generateWorld2(10);
@@ -38,13 +39,16 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		console.getConVarManager().safeVars();
 		new Dorfzentrum().setPosition(100, 100);
 		//DEBUG:
-		client.connect("127.0.0.1", 27015);
+		/*client.connect("127.0.0.1", 27015);
 		client.requestEntityCreate(Dorfzentrum.class);
 		client.requestEntityCreate(Dorfzentrum.class);
-		client.requestEntityCreate(Dorfzentrum.class);
+		client.requestEntityCreate(Dorfzentrum.class);*/
 	}
 	
 	public static void main(String[] args) {
+		Game.setName("JavaStrategie");
+		System.out.println(Game.name);
+		StrategieGame.setName("JavaStrategie");
 		StrategieGame.build(new StrategieGame(args));
 	}
 
@@ -53,7 +57,6 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 
 	}
 
-	@Override
 	public void mousedrag(int startx, int starty, int endx, int endy, MouseEvent event) {
 		/*int firstx = startx < endx ? startx : endx;
 		int firsty = starty < endy ? starty : endy;
@@ -72,7 +75,6 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 		}*/
 	}
 
-	@Override
 	public void mouseclick(int x, int y, MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			this.player.activeGroup.clear();
@@ -84,14 +86,11 @@ public class StrategieGame extends Game implements MouseWheelListener, tk.ju57u5
 	}
 
 	public void config() {
-		tileManager = new TileManager(500, 500);
+		tileManager = new TileManager(50, 50);
 		gameRunner = new GameRunner();
 		this.player = new Player();
 		window.setBackground(Color.black);
 		window.addMouseWheelListener(this);
-		mouseHandler.addMouseListener(this);
-		mouseHandler.setRightDrag(false);
-		mouseHandler.setDrawDrag(true);
 		//window.goFullScreen();
 	}
 
