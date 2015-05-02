@@ -1,6 +1,8 @@
 package tk.ju57u5v.game;
 
 import tk.ju57u5v.engine.Game;
+import tk.ju57u5v.engine.TwoDMath;
+import tk.ju57u5v.engine.components.Entity;
 import tk.ju57u5v.engine.components.Vec2;
 import tk.ju57u5v.game.gui.UnitAuswahl;
 
@@ -12,12 +14,17 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 	private Vec2 ecke = new Vec2(0, 0);
 	private Vec2 dimensions = new Vec2(0, 0);
 
+	/**
+	 * Player Object des Spiels
+	 */
+	protected Player player = new Player();
+	
 	public GameRunner() {
 		super();
 	}
 
 	@Override
-	public void work() {
+	public void tick() {
 		doKeys();
 		doMouse();
 	}
@@ -42,7 +49,8 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 		// Ende von Click oder Drag leftMouse
 		else if (!this.startPos.isNullVec() && !Game.getBindHandler().isMouseButtonDown(1)) {
 			this.endPos = Game.getBindHandler().getMousePosition();
-
+			
+			createRect();
 			// Click
 			if (this.startPos.equals(this.endPos)) {
 				findUnit();
@@ -61,7 +69,9 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 		//Links Click
 		else if (Game.getBindHandler().isMouseButtonDown(3)) {
 			Vec2 pos = Game.getBindHandler().getMousePosition();
-			((StrategieGame) Game.getGame()).player.activeGroup.moveTo(pos.getX(), pos.getY());
+			pos = Game.getKamera().toRealPosition(pos);
+			pos = TwoDMath.toCartPosition(pos);
+			this.player.activeGroup.moveTo(pos.getX(), pos.getY());
 		}
 	}
 
@@ -85,11 +95,21 @@ public class GameRunner extends tk.ju57u5v.engine.GameRunner {
 	}
 
 	private void findUnit() {
-		
+		for (int c = 0; c < Game.getRenderer().getEntities().size(); c++) {
+			Entity e = Game.getRenderer().getEntities().get(c);
+			if (TwoDMath.isRectInRect(e.getRelativIsoX(), e.getRelativIsoY(), e.getWidth(), e.getHeight(), ecke.getX(), ecke.getY(), dimensions.getX(), dimensions.getY()) && e instanceof Unit) {
+				player.activeGroup.addUnit((Unit) e);
+			}
+		}
 	}
 
 	private void findUnits() {
-		
+		for (int c = 0; c < Game.getRenderer().getEntities().size(); c++) {
+			Entity e = Game.getRenderer().getEntities().get(c);
+			if (TwoDMath.isRectInRect(e.getRelativIsoX(), e.getRelativIsoY(), e.getWidth(), e.getHeight(), ecke.getX(), ecke.getY(), dimensions.getX(), dimensions.getY()) && e instanceof Unit) {
+				player.activeGroup.addUnit((Unit) e);
+			}
+		}
 	}
 
 	private void doKeys() {

@@ -12,12 +12,8 @@ import tk.ju57u5v.engine.TwoDMath;
 import tk.ju57u5v.engine.network.Client;
 import tk.ju57u5v.engine.network.Server;
 
-public class StrategieGame extends Game implements MouseWheelListener{
+public class StrategieGame extends Game implements MouseWheelListener {
 	
-	/**
-	 * Player Object des Spiels
-	 */
-	protected Player player = new Player();
 
 	public StrategieGame(String[] args) {
 		super(args);
@@ -47,7 +43,6 @@ public class StrategieGame extends Game implements MouseWheelListener{
 	
 	public static void main(String[] args) {
 		Game.setName("JavaStrategie");
-		System.out.println(Game.name);
 		StrategieGame.setName("JavaStrategie");
 		StrategieGame.build(new StrategieGame(args));
 	}
@@ -57,38 +52,9 @@ public class StrategieGame extends Game implements MouseWheelListener{
 
 	}
 
-	public void mousedrag(int startx, int starty, int endx, int endy, MouseEvent event) {
-		/*int firstx = startx < endx ? startx : endx;
-		int firsty = starty < endy ? starty : endy;
-		int secondx = startx >= endx ? startx : endx;
-		int secondy = starty >= endy ? starty : endy;
-
-		if ((startx != endx || starty != endy)) // Wenn kein drag erfolgt ist
-												// cleare
-			((Player) player).activeGroup.clear();
-
-		for (int c = 0; c < gameRunner.getRenderer().getEntities().size(); c++) {
-			Entity e = gameRunner.getRenderer().getEntities().get(c);
-			if (TwoDMath.isRectInRect(e.getRelativIsoX(), e.getRelativIsoY(), e.getWidth(), e.getHeight(), firstx, firsty, secondx - firstx, secondy - firsty) && e instanceof Unit) {
-				((Player) player).activeGroup.addUnit((Unit) e);
-			}
-		}*/
-	}
-
-	public void mouseclick(int x, int y, MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			this.player.activeGroup.clear();
-		} else {
-			int movex = TwoDMath.toCartX(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
-			int movey = TwoDMath.toCartY(kamera.toRealX(e.getX()), kamera.toRealY(e.getY()));
-			this.player.activeGroup.moveTo(movex, movey);
-		}
-	}
-
 	public void config() {
 		tileManager = new TileManager(50, 50);
 		gameRunner = new GameRunner();
-		this.player = new Player();
 		window.setBackground(Color.black);
 		window.addMouseWheelListener(this);
 		//window.goFullScreen();
